@@ -31,10 +31,10 @@ Registers a new user. Returns a JWT token and user information if successful.
 
 | Field              | Type   | Required | Description                      |
 | ------------------ | ------ | -------- | -------------------------------- |
-| fullname.firstname | string | ✅ yes    | Minimum 3 characters             |
-| fullname.lastname  | string | ❌ no     | Minimum 3 characters if provided |
-| email              | string | ✅ yes    | Must be a valid email            |
-| password           | string | ✅ yes    | Minimum 5 characters             |
+| fullname.firstname | string | ✅ yes   | Minimum 3 characters             |
+| fullname.lastname  | string | ❌ no    | Minimum 3 characters if provided |
+| email              | string | ✅ yes   | Must be a valid email            |
+| password           | string | ✅ yes   | Minimum 5 characters             |
 
 ---
 
@@ -119,8 +119,8 @@ Logs in an existing user. Returns a JWT token and user info if credentials are v
 
 | Field    | Type   | Required | Description           |
 | -------- | ------ | -------- | --------------------- |
-| email    | string | ✅ yes    | Must be a valid email |
-| password | string | ✅ yes    | Minimum 5 characters  |
+| email    | string | ✅ yes   | Must be a valid email |
+| password | string | ✅ yes   | Minimum 5 characters  |
 
 ---
 
@@ -252,5 +252,115 @@ Logs out the authenticated user by clearing and blacklisting the JWT token. Requ
 ```json
 {
   "message": "Unauthorized"
+}
+```
+
+# 🧑‍💻 Captain Authentication API Documentation
+
+---
+
+## 🚗 5. **Captain Registration**
+
+### **Endpoint**
+
+```
+POST /captains/register
+```
+
+### **Description**
+
+Registers a new captain (driver) with vehicle details. Returns a JWT token and captain information if successful.
+
+### **Request Body**
+
+```json
+{
+  "fullname": {
+    "firstname": "Ali",
+    "lastname": "Khan"
+  },
+  "email": "ali.khan@example.com",
+  "password": "yourpassword",
+  "vehicle": {
+    "color": "white",
+    "plate": "ABC1234",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### 🔹 Fields
+
+| Field               | Type   | Required | Description                     |
+| ------------------- | ------ | -------- | ------------------------------- |
+| fullname.firstname  | string | ✅ yes   | Minimum 3 characters            |
+| fullname.lastname   | string | ✅ yes   | Minimum 3 characters            |
+| email               | string | ✅ yes   | Must be a valid email           |
+| password            | string | ✅ yes   | Minimum 5 characters            |
+| vehicle.color       | string | ✅ yes   | Minimum 3 characters            |
+| vehicle.plate       | string | ✅ yes   | Minimum 5 characters            |
+| vehicle.capacity    | number | ✅ yes   | Minimum value 1                 |
+| vehicle.vehicleType | string | ✅ yes   | Must be one of: car, bike, auto |
+
+---
+
+### ✅ **Success Response**
+
+**Status:** `201 Created`
+
+```json
+{
+  "token": "jwt_token",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "Ali",
+      "lastname": "Khan"
+    },
+    "email": "ali.khan@example.com",
+    "vehicle": {
+      "color": "white",
+      "plate": "ABC1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### ❌ **Validation Error**
+
+**Status:** `400 Bad Request`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "vehicle color must be atleast 3 characters",
+      "param": "vehicle.color",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### ⚠️ **Captain Already Exists**
+
+**Status:** `400 Bad Request`
+
+```json
+{
+  "message": "captain already exist"
+}
+```
+
+### ❗ **Server Error**
+
+**Status:** `500 Internal Server Error`
+
+```json
+{
+  "error": "Something went wrong"
 }
 ```
