@@ -364,3 +364,178 @@ Registers a new captain (driver) with vehicle details. Returns a JWT token and c
   "error": "Something went wrong"
 }
 ```
+
+## 🚗 6. **Captain Login**
+
+### **Endpoint**
+
+```
+POST /captains/login
+```
+
+### **Description**
+
+Logs in an existing captain. Returns a JWT token and captain info if credentials are valid.
+
+### **Request Body**
+
+```json
+{
+  "email": "email@gmail.com",
+  "password": "yourpassword"
+}
+```
+
+#### 🔹 Fields
+
+| Field    | Type   | Required | Description           |
+| -------- | ------ | -------- | --------------------- |
+| email    | string | ✅ yes   | Must be a valid email |
+| password | string | ✅ yes   | Minimum 5 characters  |
+
+---
+
+### ✅ **Success Response**
+
+**Status:** `200 OK`
+
+```json
+{
+  "token": "jwt_token",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "suraj",
+      "lastname": "kumar"
+    },
+    "email": "email@example.com",
+    "vehicle": {
+      "color": "white",
+      "plate": "ABC1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### ❌ **Validation Error**
+
+**Status:** `401 Unauthorized`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "invalid email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### ⚠️ **Invalid Credentials**
+
+**Status:** `401 Unauthorized`
+
+```json
+{
+  "message": "invalid email or password"
+}
+```
+
+### ❗ **Server Error**
+
+**Status:** `500 Internal Server Error`
+
+```json
+{
+  "error": "Something went wrong"
+}
+```
+
+---
+
+## 🚗 7. **Get Captain Profile**
+
+### **Endpoint**
+
+```
+GET /captains/profile
+```
+
+### **Description**
+
+Returns the authenticated captain's profile. Requires a valid JWT in a cookie or `Authorization` header.
+
+---
+
+### ✅ **Success Response**
+
+**Status:** `200 OK`
+
+```json
+{
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "suraj",
+      "lastname": "Kumar"
+    },
+    "email": "suraj@example.com",
+    "vehicle": {
+      "color": "white",
+      "plate": "ABC1234",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### ⚠️ **Unauthorized**
+
+**Status:** `400 or 401`
+
+```json
+{
+  "message": "unauthorized captain"
+}
+```
+
+---
+
+## 🚗 8. **Captain Logout**
+
+### **Endpoint**
+
+```
+GET /captains/logout
+```
+
+### **Description**
+
+Logs out the authenticated captain by clearing and blacklisting the JWT token. Requires authentication.
+
+---
+
+### ✅ **Success Response**
+
+**Status:** `200 OK`
+
+```json
+{
+  "message": "logout successfully"
+}
+```
+
+### ⚠️ **Unauthorized**
+
+**Status:** `400 or 401`
+
+```json
+{
+  "message": "unauthorized"
+}
+```
