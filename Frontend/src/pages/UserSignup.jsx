@@ -7,19 +7,21 @@ const UserSignup = () => {
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [userData, setUserData] = useState({});
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserData({
+    const newUserData = {
       fullName: {
         firstname: firstname,
         lastname: lastname,
       },
       email: email,
       password: password,
-    });
-    console.log(userData);
+    };
+    setUserData(newUserData);
+    console.log(newUserData);
     setEmail("");
     setPassword("");
     setFirstname("");
@@ -39,7 +41,7 @@ const UserSignup = () => {
           }}
           className="w-full flex flex-col gap-3"
         >
-          <h3 className="text-xl font-serif">What's your Name</h3>
+          <h3 className="text-xl font-serif">User's FullName</h3>
           <div className="w-full flex gap-2">
             <input
               required
@@ -61,7 +63,7 @@ const UserSignup = () => {
               className="bg-[#eeeeee] p-3 rounded-md w-1/2"
             />
           </div>
-          <h3 className="text-xl font-serif">What's your Email</h3>
+          <h3 className="text-xl font-serif">User's Email</h3>
           <input
             required
             type="email"
@@ -85,11 +87,11 @@ const UserSignup = () => {
             placeholder="Password"
             className="bg-[#eeeeee] p-3 rounded-md"
           />
-          <button className="bg-black text-white p-3 mt-4 rounded">
-            Register Now
+          <button className="bg-black text-white p-3 mt-4 rounded text-xl font-serif">
+            Register User
           </button>
           <p className="text-center text-md">
-            have a Account?{" "}
+            Have a Account?{" "}
             <Link to={"/user-login"} className="text-blue-600 cursor-pointer">
               Login
             </Link>
@@ -98,7 +100,7 @@ const UserSignup = () => {
       </div>
       <Link
         to={"/captain-signup"}
-        className="bg-green-600 text-white mb-11 p-3 text-center font-medium rounded-md"
+        className="bg-green-600 text-white mb-11 p-3 text-center font-medium rounded-md text-xl font-serif"
       >
         Signup As captain
       </Link>
