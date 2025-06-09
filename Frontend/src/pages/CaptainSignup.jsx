@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {CaptainDataContext} from "../context/CaptainContext";
+import axios from "axios";
 
 const CaptainSignup = () => {
   const [email, setEmail] = useState("");
@@ -10,28 +13,44 @@ const CaptainSignup = () => {
   const [plate, setPlate] = useState("");
   const [capacity, setCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
-  const [captainData, setCaptainData] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  const {setCaptain} = React.useContext(CaptainDataContext)
+
+  const submitHandler = async(e) => {
     e.preventDefault();
 
-    const data = {
-      fullName: {
+    const CaptainData = {
+      fullname: {
         firstname,
         lastname,
       },
-      vehicleInfo: {
-        vehicleColor: color,
-        vehiclePlate: plate,
-        vehicleCapacity: capacity,
-        vehicleType,
-      },
       email,
       password,
+      vehicle: {
+        color: color,
+        plate: plate,
+        capacity: capacity,
+        vehicleType : vehicleType,
+      },
     };
 
-    setCaptainData(data);
-    console.log(captainData); // Logging correct data
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/register`,
+        CaptainData
+      );
+
+      if (response.status === 201) {
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem('token', data.token);
+        navigate("/captain-home");
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+      alert("captain registration failed. Please try again.");
+    }
 
     // Clear form fields
     setEmail("");
@@ -118,7 +137,7 @@ const CaptainSignup = () => {
             <div className="flex gap-3 w-full">
               <input
                 required
-                type="text"
+                type="number"
                 value={capacity}
                 onChange={(e) => setCapacity(e.target.value)}
                 placeholder="Capacity"
@@ -138,8 +157,8 @@ const CaptainSignup = () => {
             </div>
           </div>
 
-          <button className="bg-black text-white p-3 mt-4 rounded">
-            Register Now
+          <button className="bg-black text-white p-3 mt-4 rounded text-xl font-serif">
+            Create Captain Account
           </button>
 
           <p className="text-center text-md">

@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import {UserDataContext} from "../context/UserContext";
 
 const UserSignup = () => {
   const [email, setEmail] = useState("");
@@ -10,18 +12,38 @@ const UserSignup = () => {
   // eslint-disable-next-line no-unused-vars
   const [userData, setUserData] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const {user, setUser} = React.useContext(UserDataContext);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     const newUserData = {
-      fullName: {
+      fullname: {
         firstname: firstname,
         lastname: lastname,
       },
       email: email,
       password: password,
     };
-    setUserData(newUserData);
-    console.log(newUserData);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        newUserData
+      );
+
+      if (response.status === 201) {
+        const data = response.data;
+        setUser(data.user);
+        localStorage.setItem('token', data.token);
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
+      alert("Registration failed. Please try again.");
+    }
+
     setEmail("");
     setPassword("");
     setFirstname("");
@@ -88,7 +110,7 @@ const UserSignup = () => {
             className="bg-[#eeeeee] p-3 rounded-md"
           />
           <button className="bg-black text-white p-3 mt-4 rounded text-xl font-serif">
-            Register User
+            Create Account
           </button>
           <p className="text-center text-md">
             Have a Account?{" "}
