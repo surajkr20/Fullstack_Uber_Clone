@@ -180,7 +180,8 @@ const Home = () => {
         ref={ConfirmRidePanelRef}
         className="fixed bottom-0 z-10 w-full shadow-lg px-2 py-4 flex flex-col gap-2 translate-y-full bg-white"
       >
-        <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel} setVehicleFound={setVehicleFound}/>
+        <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel} setVehicleFound={setVehicleFound}
+        setWaitingForDriver={setWaitingForDriver}/>
       </div>
 
       <div

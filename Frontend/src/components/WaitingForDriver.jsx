@@ -3,40 +3,39 @@ import captainImage from "../../public/ghibli.jpg";
 
 const WaitingForDriver = (props) => {
   return (
-    <div className="flex flex-col px-2">
-      <div className="flex items-center justify-center">
+    <div className="flex flex-col gap-5 px-3">
+      <div className="flex flex-col items-center justify-center">
         <h1
           onClick={() => {
-            props.setConfirmRidePanel(false);
+            props.setWaitingForDriver(false);
           }}
           className="font-bold"
         >
           <i className="ri-arrow-down-wide-fill text-2xl"></i>
         </h1>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-1">
+            <img
+              className="rounded-full w-16"
+              src={captainImage}
+              alt="captain_img"
+            />
+            <img
+              className="w-16 h-16 rounded-full bg-gray-300"
+              src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1743773253/assets/5e/8ce23d-35fa-425d-a7d2-08a2826d04bc/original/UberBlackXL.png"
+              alt="selected_vehicle_img"
+            />
+          </div>
+          <div>
+            <h2 className="font-medium text-gray-900">Abhinav Bhardwaaj</h2>
+            <h4>5FS2G6</h4>
+            <p className="text-sm font-serif">Maruti Suzuki Alto</p>
+          </div>
+        </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <img
-            className="rounded-full w-16"
-            src={captainImage}
-            alt="captain_img"
-          />
-          <img
-            className="w-16 h-16 rounded-full bg-gray-300"
-            src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1743773253/assets/5e/8ce23d-35fa-425d-a7d2-08a2826d04bc/original/UberBlackXL.png"
-            alt="selected_vehicle_img"
-          />
-        </div>
-        <div>
-          <h2 className="font-medium text-gray-900">Abhinav Bhardwaaj</h2>
-          <h4>5FS2G6</h4>
-          <p className="text-sm font-serif">Maruti Suzuki Alto</p>
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-between items-center px-4 py-3">
-        <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-col justify-between items-center">
+        <div className="flex flex-col gap-2 w-full">
           <div className="flex items-center gap-4">
             <i className="ri-map-pin-2-line text-2xl"></i>
             <div className="">
