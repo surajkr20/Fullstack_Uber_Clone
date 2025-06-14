@@ -14,7 +14,7 @@ import CaptainLogout from "./pages/CaptainLogout";
 
 function App() {
   return (
-    <div className="">
+    <div className="app">
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/user-login" element={<UserLogin />} />
