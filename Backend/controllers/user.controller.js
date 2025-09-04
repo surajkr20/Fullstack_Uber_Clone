@@ -7,7 +7,7 @@ module.exports.registerUser = async (req, res, next) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
     return res.status(400).json({
-      errors: errors.array(),
+      error: error.array(),
     });
   }
 
@@ -21,7 +21,7 @@ module.exports.registerUser = async (req, res, next) => {
     });
   }
 
-  const hashPassword = await UserModel.hashPassword(password);
+  const hashPassword = await UserModel.hashPassword(password, 10);
 
   const user = await UserService.createUser({
     firstname: fullname.firstname,
@@ -36,8 +36,8 @@ module.exports.registerUser = async (req, res, next) => {
 };
 
 module.exports.loginUser = async (req, res, next) => {
-  const error = validationResult(req);
-  if (!error.isEmpty) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty) {
     return res.status(401).json({
       errors: errors.array(),
     });
